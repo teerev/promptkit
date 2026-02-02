@@ -269,8 +269,15 @@ def render_cmd(
 
     # Output result
     if output_file:
-        Path(output_file).write_text(rendered, encoding="utf-8")
-        click.echo(f"Output written to: {output_file}", err=True)
+        try:
+            out_path = Path(output_file)
+            # Create parent directories if they don't exist
+            out_path.parent.mkdir(parents=True, exist_ok=True)
+            out_path.write_text(rendered, encoding="utf-8")
+            click.echo(f"Output written to: {output_file}", err=True)
+        except OSError as e:
+            click.echo(f"Error writing output file: {e}", err=True)
+            sys.exit(1)
     else:
         click.echo(rendered)
 
