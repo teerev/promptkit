@@ -1,0 +1,64 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pk-promptkit"
+version = "0.1.0"
+description = "Production-grade prompt template library and CLI for LLM-assisted software engineering"
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.11"
+authors = [
+    { name = "promptkit contributors" }
+]
+keywords = ["llm", "prompts", "templates", "cli", "software-engineering"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development",
+    "Topic :: Text Processing :: Markup",
+]
+dependencies = [
+    "jinja2>=3.1.0",
+    "pyyaml>=6.0",
+    "jsonschema>=4.20.0",
+    "click>=8.1.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+]
+
+[project.scripts]
+pk = "pk.cli:main"
+promptkit = "pk.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/promptkit/promptkit"
+Repository = "https://github.com/promptkit/promptkit"
+
+[tool.hatch.build.targets.wheel]
+packages = ["pk"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "C4", "UP"]
+ignore = ["E501"]

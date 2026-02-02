@@ -1,0 +1,22 @@
+# Default preset for code audit
+# Balanced settings suitable for most codebases
+
+repo_path: "."
+scope:
+  - "."
+time_budget_minutes: 60
+depth: normal
+output_format: markdown
+risk_tolerance: balanced
+audience: senior_eng
+focus_areas:
+  - code_quality
+  - maintainability
+  - error_handling
+  - documentation
+exclude_patterns:
+  - "**/node_modules/**"
+  - "**/.git/**"
+  - "**/vendor/**"
+  - "**/__pycache__/**"
+severity_threshold: info

@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Refactor Plan",
+  "description": "Create a systematic refactoring plan with prioritized improvements",
+  "type": "object",
+  "properties": {
+    "repo_path": { "type": "string", "default": ".", "description": "Path to the repository root" },
+    "scope": { "type": "array", "items": { "type": "string" }, "default": ["."], "description": "Directories to analyze" },
+    "time_budget_minutes": { "type": "integer", "default": 60, "minimum": 15, "description": "Time budget in minutes" },
+    "depth": { "type": "string", "enum": ["fast", "normal", "deep"], "default": "normal", "description": "Analysis depth" },
+    "output_format": { "type": "string", "enum": ["markdown", "json"], "default": "markdown", "description": "Output format" },
+    "risk_tolerance": { "type": "string", "enum": ["conservative", "balanced", "aggressive"], "default": "balanced", "description": "Risk tolerance for refactoring suggestions" },
+    "audience": { "type": "string", "enum": ["senior_eng", "junior_eng", "non_tech"], "default": "senior_eng", "description": "Target audience" },
+    "definition_of_done": { "type": "array", "items": { "type": "string" }, "default": [], "description": "Completion criteria" },
+    "constraints": { "type": "array", "items": { "type": "string" }, "default": [], "description": "Constraints" },
+    "assumptions": { "type": "array", "items": { "type": "string" }, "default": [], "description": "Assumptions" },
+    "notes": { "type": "string", "default": "", "description": "Additional notes" },
+    "refactor_goals": { "type": "array", "items": { "type": "string" }, "default": ["maintainability", "testability", "performance"], "description": "Goals for refactoring" }
+  },
+  "required": []
+}

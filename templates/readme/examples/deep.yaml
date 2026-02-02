@@ -1,0 +1,26 @@
+# Deep preset for comprehensive README generation
+# Full documentation with many examples
+
+repo_path: "."
+scope:
+  - "."
+time_budget_minutes: 60
+depth: deep
+output_format: markdown
+risk_tolerance: conservative
+audience: junior_eng
+readme_mode: create
+sections:
+  - overview
+  - installation
+  - usage
+  - api
+  - contributing
+  - license
+include_badges: true
+include_toc: true
+code_examples_count: 5
+definition_of_done:
+  - "All public APIs are documented"
+  - "All code examples are tested"
+  - "Installation instructions cover all supported platforms"

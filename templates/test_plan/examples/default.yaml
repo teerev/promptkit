@@ -1,0 +1,14 @@
+# Default preset for test plan generation
+repo_path: "."
+scope:
+  - "."
+time_budget_minutes: 45
+depth: normal
+output_format: markdown
+risk_tolerance: balanced
+audience: senior_eng
+test_types:
+  - unit
+  - integration
+  - e2e
+coverage_target: 80

@@ -1,0 +1,22 @@
+# Deep preset for thorough security review
+# Full threat modeling with compliance checks
+
+repo_path: "."
+scope:
+  - "."
+time_budget_minutes: 180
+depth: deep
+output_format: markdown
+risk_tolerance: conservative
+audience: senior_eng
+threat_model: web_app
+compliance_frameworks:
+  - "OWASP"
+  - "CWE"
+exclude_patterns:
+  - "**/node_modules/**"
+  - "**/.git/**"
+definition_of_done:
+  - "All entry points have been identified and reviewed"
+  - "All sensitive data flows have been mapped"
+  - "Every finding has remediation code example"

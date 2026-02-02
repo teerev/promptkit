@@ -1,0 +1,112 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "README Generator",
+  "description": "Generate or improve README documentation based on codebase analysis",
+  "type": "object",
+  "properties": {
+    "repo_path": {
+      "type": "string",
+      "default": ".",
+      "description": "Path to the repository root"
+    },
+    "scope": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": ["."],
+      "description": "Directories to analyze for README generation"
+    },
+    "time_budget_minutes": {
+      "type": "integer",
+      "default": 30,
+      "minimum": 10,
+      "description": "Time budget for README generation in minutes"
+    },
+    "depth": {
+      "type": "string",
+      "enum": ["fast", "normal", "deep"],
+      "default": "normal",
+      "description": "Analysis depth: fast (overview), normal (comprehensive), deep (detailed with examples)"
+    },
+    "output_format": {
+      "type": "string",
+      "enum": ["markdown", "json"],
+      "default": "markdown",
+      "description": "Output format for the README"
+    },
+    "risk_tolerance": {
+      "type": "string",
+      "enum": ["conservative", "balanced", "aggressive"],
+      "default": "balanced",
+      "description": "How speculative to be about undocumented features"
+    },
+    "audience": {
+      "type": "string",
+      "enum": ["senior_eng", "junior_eng", "non_tech"],
+      "default": "senior_eng",
+      "description": "Target audience for the README"
+    },
+    "definition_of_done": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": [],
+      "description": "Criteria that define completion"
+    },
+    "constraints": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": [],
+      "description": "Constraints on README content or style"
+    },
+    "assumptions": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": [],
+      "description": "Assumptions about the project"
+    },
+    "notes": {
+      "type": "string",
+      "default": "",
+      "description": "Additional notes or context"
+    },
+    "project_name": {
+      "type": "string",
+      "default": "",
+      "description": "Project name (auto-detected from repo if empty)"
+    },
+    "readme_mode": {
+      "type": "string",
+      "enum": ["create", "improve", "audit"],
+      "default": "create",
+      "description": "Mode: create new README, improve existing, or audit existing"
+    },
+    "existing_readme_path": {
+      "type": "string",
+      "default": "",
+      "description": "Path to existing README for improve/audit modes"
+    },
+    "sections": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": ["overview", "installation", "usage", "api", "contributing", "license"],
+      "description": "Sections to include in the README"
+    },
+    "include_badges": {
+      "type": "boolean",
+      "default": true,
+      "description": "Include status badges in README"
+    },
+    "include_toc": {
+      "type": "boolean",
+      "default": true,
+      "description": "Include table of contents"
+    },
+    "code_examples_count": {
+      "type": "integer",
+      "default": 3,
+      "minimum": 0,
+      "maximum": 10,
+      "description": "Number of code examples to include"
+    }
+  },
+  "required": []
+}

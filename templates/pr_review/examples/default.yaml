@@ -1,0 +1,14 @@
+# Default preset for PR review
+repo_path: "."
+scope:
+  - "."
+time_budget_minutes: 30
+depth: normal
+output_format: markdown
+risk_tolerance: balanced
+audience: senior_eng
+review_focus:
+  - correctness
+  - security
+  - performance
+  - maintainability

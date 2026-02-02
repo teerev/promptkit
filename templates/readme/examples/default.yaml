@@ -1,0 +1,22 @@
+# Default preset for README generation
+# Create a new comprehensive README
+
+repo_path: "."
+scope:
+  - "."
+time_budget_minutes: 30
+depth: normal
+output_format: markdown
+risk_tolerance: balanced
+audience: senior_eng
+readme_mode: create
+sections:
+  - overview
+  - installation
+  - usage
+  - api
+  - contributing
+  - license
+include_badges: true
+include_toc: true
+code_examples_count: 3

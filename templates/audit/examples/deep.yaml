@@ -1,0 +1,24 @@
+# Deep preset for thorough code audit
+# Comprehensive review for critical codebases
+
+repo_path: "."
+scope:
+  - "."
+time_budget_minutes: 180
+depth: deep
+output_format: markdown
+risk_tolerance: conservative
+audience: senior_eng
+focus_areas:
+  - code_quality
+  - maintainability
+  - error_handling
+  - documentation
+exclude_patterns:
+  - "**/node_modules/**"
+  - "**/.git/**"
+severity_threshold: info
+definition_of_done:
+  - "All files in scope have been reviewed"
+  - "Every finding has file path and line number evidence"
+  - "Remediation roadmap is complete"

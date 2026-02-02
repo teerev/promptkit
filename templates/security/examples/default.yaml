@@ -1,0 +1,18 @@
+# Default preset for security review
+# Comprehensive security scan with conservative risk tolerance
+
+repo_path: "."
+scope:
+  - "."
+time_budget_minutes: 90
+depth: normal
+output_format: markdown
+risk_tolerance: conservative
+audience: senior_eng
+threat_model: general
+exclude_patterns:
+  - "**/node_modules/**"
+  - "**/.git/**"
+  - "**/vendor/**"
+  - "**/__pycache__/**"
+  - "**/test/**"

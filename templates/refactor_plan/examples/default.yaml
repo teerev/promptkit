@@ -1,0 +1,13 @@
+# Default preset for refactor plan
+repo_path: "."
+scope:
+  - "."
+time_budget_minutes: 60
+depth: normal
+output_format: markdown
+risk_tolerance: balanced
+audience: senior_eng
+refactor_goals:
+  - maintainability
+  - testability
+  - performance

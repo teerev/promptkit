@@ -1,0 +1,11 @@
+# Default preset for repository mapping
+repo_path: "."
+scope:
+  - "."
+time_budget_minutes: 30
+depth: normal
+output_format: markdown
+risk_tolerance: balanced
+audience: senior_eng
+include_dependencies: true
+max_depth: 5

@@ -1,0 +1,21 @@
+# Fast preset for quick security scan
+# OWASP Top 10 focus, surface-level review
+
+repo_path: "."
+scope:
+  - "."
+time_budget_minutes: 30
+depth: fast
+output_format: markdown
+risk_tolerance: balanced
+audience: senior_eng
+threat_model: general
+exclude_patterns:
+  - "**/node_modules/**"
+  - "**/.git/**"
+  - "**/vendor/**"
+  - "**/__pycache__/**"
+  - "**/test/**"
+  - "**/tests/**"
+  - "**/*.test.*"
+  - "**/*_test.*"

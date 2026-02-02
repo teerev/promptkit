@@ -1,0 +1,85 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Repository Map",
+  "description": "Generate a comprehensive map of repository structure, architecture, and key components",
+  "type": "object",
+  "properties": {
+    "repo_path": {
+      "type": "string",
+      "default": ".",
+      "description": "Path to the repository root"
+    },
+    "scope": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": ["."],
+      "description": "Directories or glob patterns to map"
+    },
+    "time_budget_minutes": {
+      "type": "integer",
+      "default": 30,
+      "minimum": 5,
+      "description": "Time budget for mapping in minutes"
+    },
+    "depth": {
+      "type": "string",
+      "enum": ["fast", "normal", "deep"],
+      "default": "normal",
+      "description": "Mapping depth: fast (structure only), normal (with key files), deep (full analysis)"
+    },
+    "output_format": {
+      "type": "string",
+      "enum": ["markdown", "json"],
+      "default": "markdown",
+      "description": "Output format for the map"
+    },
+    "risk_tolerance": {
+      "type": "string",
+      "enum": ["conservative", "balanced", "aggressive"],
+      "default": "balanced",
+      "description": "Risk tolerance for inferences"
+    },
+    "audience": {
+      "type": "string",
+      "enum": ["senior_eng", "junior_eng", "non_tech"],
+      "default": "senior_eng",
+      "description": "Target audience for the map"
+    },
+    "definition_of_done": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": [],
+      "description": "Criteria that define completion"
+    },
+    "constraints": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": [],
+      "description": "Constraints or limitations"
+    },
+    "assumptions": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": [],
+      "description": "Assumptions about the codebase"
+    },
+    "notes": {
+      "type": "string",
+      "default": "",
+      "description": "Additional notes or context"
+    },
+    "include_dependencies": {
+      "type": "boolean",
+      "default": true,
+      "description": "Include dependency analysis"
+    },
+    "max_depth": {
+      "type": "integer",
+      "default": 5,
+      "minimum": 1,
+      "maximum": 10,
+      "description": "Maximum directory depth to map"
+    }
+  },
+  "required": []
+}

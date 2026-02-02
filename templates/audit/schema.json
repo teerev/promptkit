@@ -1,0 +1,91 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Code Audit",
+  "description": "Comprehensive code quality audit with prioritized findings and actionable recommendations",
+  "type": "object",
+  "properties": {
+    "repo_path": {
+      "type": "string",
+      "default": ".",
+      "description": "Path to the repository root"
+    },
+    "scope": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": ["."],
+      "description": "Directories or glob patterns to audit (e.g., ['src/', 'lib/*.py'])"
+    },
+    "time_budget_minutes": {
+      "type": "integer",
+      "default": 60,
+      "minimum": 5,
+      "description": "Time budget for the audit in minutes"
+    },
+    "depth": {
+      "type": "string",
+      "enum": ["fast", "normal", "deep"],
+      "default": "normal",
+      "description": "Audit depth: fast (surface issues), normal (balanced), deep (thorough)"
+    },
+    "output_format": {
+      "type": "string",
+      "enum": ["markdown", "json"],
+      "default": "markdown",
+      "description": "Output format for the audit report"
+    },
+    "risk_tolerance": {
+      "type": "string",
+      "enum": ["conservative", "balanced", "aggressive"],
+      "default": "balanced",
+      "description": "Risk tolerance for recommendations"
+    },
+    "audience": {
+      "type": "string",
+      "enum": ["senior_eng", "junior_eng", "non_tech"],
+      "default": "senior_eng",
+      "description": "Target audience for the report"
+    },
+    "definition_of_done": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": [],
+      "description": "Criteria that define completion of the audit"
+    },
+    "constraints": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": [],
+      "description": "Constraints or limitations to observe"
+    },
+    "assumptions": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": [],
+      "description": "Assumptions about the codebase"
+    },
+    "notes": {
+      "type": "string",
+      "default": "",
+      "description": "Additional notes or context"
+    },
+    "focus_areas": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": ["code_quality", "maintainability", "error_handling", "documentation"],
+      "description": "Specific areas to focus the audit on"
+    },
+    "exclude_patterns": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": ["**/node_modules/**", "**/.git/**", "**/vendor/**", "**/__pycache__/**"],
+      "description": "Glob patterns to exclude from audit"
+    },
+    "severity_threshold": {
+      "type": "string",
+      "enum": ["info", "warning", "error", "critical"],
+      "default": "info",
+      "description": "Minimum severity level to report"
+    }
+  },
+  "required": []
+}

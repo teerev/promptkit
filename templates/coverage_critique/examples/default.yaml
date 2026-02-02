@@ -1,0 +1,9 @@
+# Default preset for coverage critique
+repo_path: "."
+scope:
+  - "."
+time_budget_minutes: 45
+depth: normal
+output_format: markdown
+risk_tolerance: balanced
+audience: senior_eng

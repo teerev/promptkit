@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PR Review",
+  "description": "Conduct a thorough pull request code review with actionable feedback",
+  "type": "object",
+  "properties": {
+    "repo_path": { "type": "string", "default": ".", "description": "Path to the repository root" },
+    "scope": { "type": "array", "items": { "type": "string" }, "default": ["."], "description": "Files changed in the PR" },
+    "time_budget_minutes": { "type": "integer", "default": 30, "minimum": 10, "description": "Time budget in minutes" },
+    "depth": { "type": "string", "enum": ["fast", "normal", "deep"], "default": "normal", "description": "Review depth" },
+    "output_format": { "type": "string", "enum": ["markdown", "json"], "default": "markdown", "description": "Output format" },
+    "risk_tolerance": { "type": "string", "enum": ["conservative", "balanced", "aggressive"], "default": "balanced", "description": "Risk tolerance for approvals" },
+    "audience": { "type": "string", "enum": ["senior_eng", "junior_eng", "non_tech"], "default": "senior_eng", "description": "PR author experience level" },
+    "definition_of_done": { "type": "array", "items": { "type": "string" }, "default": [], "description": "Completion criteria" },
+    "constraints": { "type": "array", "items": { "type": "string" }, "default": [], "description": "Constraints" },
+    "assumptions": { "type": "array", "items": { "type": "string" }, "default": [], "description": "Assumptions" },
+    "notes": { "type": "string", "default": "", "description": "Additional notes" },
+    "pr_title": { "type": "string", "default": "", "description": "PR title" },
+    "pr_description": { "type": "string", "default": "", "description": "PR description" },
+    "review_focus": { "type": "array", "items": { "type": "string" }, "default": ["correctness", "security", "performance", "maintainability"], "description": "Areas to focus review on" }
+  },
+  "required": []
+}

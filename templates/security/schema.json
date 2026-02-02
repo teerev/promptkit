@@ -1,0 +1,97 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Security Review",
+  "description": "Security-focused code review identifying vulnerabilities, risks, and remediation steps",
+  "type": "object",
+  "properties": {
+    "repo_path": {
+      "type": "string",
+      "default": ".",
+      "description": "Path to the repository root"
+    },
+    "scope": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": ["."],
+      "description": "Directories or glob patterns to review (e.g., ['src/', 'api/'])"
+    },
+    "time_budget_minutes": {
+      "type": "integer",
+      "default": 90,
+      "minimum": 15,
+      "description": "Time budget for the security review in minutes"
+    },
+    "depth": {
+      "type": "string",
+      "enum": ["fast", "normal", "deep"],
+      "default": "normal",
+      "description": "Review depth: fast (OWASP Top 10), normal (comprehensive), deep (threat modeling)"
+    },
+    "output_format": {
+      "type": "string",
+      "enum": ["markdown", "json"],
+      "default": "markdown",
+      "description": "Output format for the security report"
+    },
+    "risk_tolerance": {
+      "type": "string",
+      "enum": ["conservative", "balanced", "aggressive"],
+      "default": "conservative",
+      "description": "Risk tolerance - conservative flags more potential issues"
+    },
+    "audience": {
+      "type": "string",
+      "enum": ["senior_eng", "junior_eng", "non_tech"],
+      "default": "senior_eng",
+      "description": "Target audience for the report"
+    },
+    "definition_of_done": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": [],
+      "description": "Criteria that define completion of the review"
+    },
+    "constraints": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": [],
+      "description": "Constraints or limitations to observe"
+    },
+    "assumptions": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": [],
+      "description": "Assumptions about the codebase or deployment"
+    },
+    "notes": {
+      "type": "string",
+      "default": "",
+      "description": "Additional notes or context"
+    },
+    "threat_model": {
+      "type": "string",
+      "enum": ["web_app", "api", "cli", "library", "infrastructure", "general"],
+      "default": "general",
+      "description": "Type of application for threat modeling context"
+    },
+    "compliance_frameworks": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": [],
+      "description": "Compliance frameworks to check against (e.g., ['OWASP', 'CWE', 'PCI-DSS'])"
+    },
+    "exclude_patterns": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": ["**/node_modules/**", "**/.git/**", "**/vendor/**", "**/__pycache__/**", "**/test/**"],
+      "description": "Glob patterns to exclude from review"
+    },
+    "sensitive_paths": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": [],
+      "description": "Paths known to contain sensitive code requiring extra scrutiny"
+    }
+  },
+  "required": []
+}

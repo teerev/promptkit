@@ -1,0 +1,19 @@
+# Fast preset for quick README generation
+# Minimal but functional README
+
+repo_path: "."
+scope:
+  - "."
+time_budget_minutes: 15
+depth: fast
+output_format: markdown
+risk_tolerance: balanced
+audience: senior_eng
+readme_mode: create
+sections:
+  - overview
+  - installation
+  - usage
+include_badges: false
+include_toc: false
+code_examples_count: 1
