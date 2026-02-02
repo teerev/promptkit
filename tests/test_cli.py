@@ -121,11 +121,11 @@ class TestRenderCommand:
                 "--run-dir", tmpdir,
             ])
             assert result.exit_code == 0
-            
+
             # Check run packet was created
             run_dirs = list(Path(tmpdir).iterdir())
             assert len(run_dirs) == 1
-            
+
             packet_dir = run_dirs[0]
             assert (packet_dir / "prompt.md").exists()
             assert (packet_dir / "params.resolved.json").exists()

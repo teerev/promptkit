@@ -1,6 +1,5 @@
 """Tests for the doctor module."""
 
-import pytest
 
 from pk.doctor import (
     DoctorReport,
@@ -88,7 +87,7 @@ class TestNormalizeText:
         text1 = "line1\r\nline2\r\n"
         text2 = "line1\nline2\n"
         text3 = "line1\rline2\r"
-        
+
         assert normalize_text(text1) == normalize_text(text2)
         assert normalize_text(text2) == normalize_text(text3)
 
@@ -116,7 +115,7 @@ class TestValidateSchemaJson:
     def test_all_templates_have_valid_schemas(self):
         """All templates should have valid schemas."""
         from pk.render import list_templates
-        
+
         for template_info in list_templates():
             result = validate_schema_json(template_info["name"])
             assert result.passed is True, f"Schema failed for {template_info['name']}: {result.message}"
@@ -134,7 +133,7 @@ class TestValidatePresets:
     def test_all_templates_have_valid_presets(self):
         """All templates should have valid presets."""
         from pk.render import list_templates
-        
+
         for template_info in list_templates():
             results = validate_presets(template_info["name"])
             for result in results:
@@ -152,7 +151,7 @@ class TestValidateVariableCoverage:
     def test_all_templates_have_covered_variables(self):
         """All templates should have covered variables."""
         from pk.render import list_templates
-        
+
         for template_info in list_templates():
             result = validate_variable_coverage(template_info["name"])
             assert result.passed is True, f"Variable coverage failed for {template_info['name']}: {result.message}"
@@ -179,7 +178,7 @@ class TestValidateGoldenTest:
     def test_all_templates_pass_golden_test(self):
         """All templates should pass their golden tests."""
         from pk.render import list_templates
-        
+
         for template_info in list_templates():
             result = validate_golden_test(template_info["name"])
             assert result.passed is True, f"Golden test failed for {template_info['name']}: {result.message}\n{result.details}"
@@ -191,10 +190,10 @@ class TestValidateTemplate:
     def test_validates_all_aspects(self):
         """Should validate all aspects of a template."""
         results = validate_template("audit")
-        
+
         # Should have multiple results
         assert len(results) > 0
-        
+
         # Check we have different types of checks
         checks = {r.check for r in results}
         assert "schema_json" in checks
@@ -208,11 +207,11 @@ class TestValidateAllTemplates:
     def test_validates_all_templates(self):
         """Should validate all templates."""
         report = validate_all_templates()
-        
+
         # Should have results for multiple templates
         templates = {r.template for r in report.results}
         assert len(templates) >= 3  # At least audit, security, readme
-        
+
         # All should pass
         assert report.passed is True, report.format_report()
 
@@ -220,6 +219,6 @@ class TestValidateAllTemplates:
         """Report should include all template types."""
         report = validate_all_templates()
         templates = {r.template for r in report.results}
-        
+
         expected = {"audit", "security", "readme"}
         assert expected.issubset(templates)

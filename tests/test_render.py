@@ -2,7 +2,6 @@
 
 import json
 import tempfile
-from pathlib import Path
 
 import pytest
 import yaml
@@ -130,7 +129,7 @@ class TestLoadParamsFile:
             yaml.dump({"key": "value", "number": 42}, f)
             f.flush()
             params = load_params_file(f.name)
-        
+
         assert params["key"] == "value"
         assert params["number"] == 42
 
@@ -142,7 +141,7 @@ class TestLoadParamsFile:
             json.dump({"key": "value", "number": 42}, f)
             f.flush()
             params = load_params_file(f.name)
-        
+
         assert params["key"] == "value"
         assert params["number"] == 42
 
