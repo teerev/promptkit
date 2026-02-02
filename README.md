@@ -142,7 +142,24 @@ This enables:
 - Tracking which prompts were used for which tasks
 - Auditing prompt usage over time
 
-## Parameter Merging
+## CLI Reference
+
+### `pk render` - Full Options
+
+```bash
+pk render <template> [OPTIONS]
+```
+
+| Flag | Description | Example |
+|------|-------------|---------|
+| `--preset`, `-p` | Load a preset file (e.g., `default`, `fast`, `deep`) | `--preset fast` |
+| `--params`, `-P` | Load parameters from YAML/JSON file | `--params my_config.yaml` |
+| `--set`, `-s` | Override a single parameter (repeatable) | `--set depth=deep` |
+| `--out`, `-o` | Write output to file instead of stdout | `--out prompt.md` |
+| `--format`, `-f` | Override output format | `--format json` |
+| `--run-dir` | Create a reproducibility packet | `--run-dir ./runs` |
+
+### Parameter Merging
 
 Parameters are merged in order (later overrides earlier):
 
@@ -151,13 +168,149 @@ Parameters are merged in order (later overrides earlier):
 3. **Params file** - From `--params` flag (YAML or JSON)
 4. **CLI overrides** - From `--set` flags
 
-Example:
+### `--set` Flag Syntax
+
+The `--set` flag supports multiple value types:
+
 ```bash
+# Strings
+--set repo_path=/path/to/repo
+--set notes="Review the auth module carefully"
+
+# Integers
+--set time_budget_minutes=120
+--set code_examples_count=5
+
+# Booleans
+--set include_badges=true
+--set include_toc=false
+
+# Arrays (JSON syntax)
+--set 'scope=["src/", "lib/"]'
+--set 'focus_areas=["security", "performance"]'
+--set 'constraints=["Do not modify public APIs", "Preserve backwards compatibility"]'
+```
+
+### Complete Examples
+
+```bash
+# Quick audit with minimal output
 pk render audit \
   --preset fast \
-  --params custom_params.yaml \
-  --set time_budget_minutes=15 \
-  --set depth=deep
+  --set severity_threshold=warning \
+  --out quick_audit.md
+
+# Deep security review for a web app
+pk render security \
+  --preset deep \
+  --set threat_model=web_app \
+  --set 'compliance_frameworks=["OWASP", "CWE"]' \
+  --set 'sensitive_paths=["src/auth/", "src/crypto/"]' \
+  --run-dir ./security_runs
+
+# Generate README for junior developers
+pk render readme \
+  --set audience=junior_eng \
+  --set code_examples_count=5 \
+  --set include_toc=true \
+  --set 'sections=["overview", "installation", "usage", "api"]'
+
+# Audit with custom scope and constraints
+pk render audit \
+  --set 'scope=["src/api/", "src/models/"]' \
+  --set 'exclude_patterns=["**/*.test.ts", "**/mocks/**"]' \
+  --set 'focus_areas=["error_handling", "code_quality"]' \
+  --set 'definition_of_done=["All critical issues addressed", "No security vulnerabilities"]'
+
+# PR review with custom params file
+pk render pr_review \
+  --params ./review_config.yaml \
+  --set pr_title="Add user authentication" \
+  --set 'review_focus=["security", "correctness"]'
+```
+
+## Base Parameters (All Templates)
+
+These parameters are available across all templates:
+
+| Parameter | Type | Values | Default | Description |
+|-----------|------|--------|---------|-------------|
+| `repo_path` | string | any path | `"."` | Path to repository root |
+| `scope` | array | glob patterns | `["."]` | Directories/files to include |
+| `time_budget_minutes` | integer | 5+ | varies | Time budget for the task |
+| `depth` | enum | `fast`, `normal`, `deep` | `"normal"` | Analysis thoroughness |
+| `output_format` | enum | `markdown`, `json` | `"markdown"` | Output format |
+| `risk_tolerance` | enum | `conservative`, `balanced`, `aggressive` | `"balanced"` | Risk level for recommendations |
+| `audience` | enum | `senior_eng`, `junior_eng`, `non_tech` | `"senior_eng"` | Target audience |
+| `definition_of_done` | array | any strings | `[]` | Completion criteria |
+| `constraints` | array | any strings | `[]` | Constraints to observe |
+| `assumptions` | array | any strings | `[]` | Assumptions about the task |
+| `notes` | string | any text | `""` | Additional context |
+
+## Template-Specific Parameters
+
+### `audit` - Code Quality Audit
+
+| Parameter | Type | Values | Default |
+|-----------|------|--------|---------|
+| `focus_areas` | array | `code_quality`, `maintainability`, `error_handling`, `documentation` | all four |
+| `exclude_patterns` | array | glob patterns | common excludes |
+| `severity_threshold` | enum | `info`, `warning`, `error`, `critical` | `"info"` |
+
+### `security` - Security Review
+
+| Parameter | Type | Values | Default |
+|-----------|------|--------|---------|
+| `threat_model` | enum | `web_app`, `api`, `cli`, `library`, `infrastructure`, `general` | `"general"` |
+| `compliance_frameworks` | array | e.g., `OWASP`, `CWE`, `PCI-DSS` | `[]` |
+| `exclude_patterns` | array | glob patterns | common excludes |
+| `sensitive_paths` | array | paths requiring extra scrutiny | `[]` |
+
+### `readme` - README Generator
+
+| Parameter | Type | Values | Default |
+|-----------|------|--------|---------|
+| `readme_mode` | enum | `create`, `improve`, `audit` | `"create"` |
+| `project_name` | string | any (auto-detected if empty) | `""` |
+| `existing_readme_path` | string | path to existing README | `""` |
+| `sections` | array | `overview`, `installation`, `usage`, `api`, `contributing`, `license` | all six |
+| `include_badges` | boolean | `true`, `false` | `true` |
+| `include_toc` | boolean | `true`, `false` | `true` |
+| `code_examples_count` | integer | 0-10 | `3` |
+
+### `pr_review` - Pull Request Review
+
+| Parameter | Type | Values | Default |
+|-----------|------|--------|---------|
+| `pr_title` | string | any | `""` |
+| `pr_description` | string | any | `""` |
+| `review_focus` | array | `correctness`, `security`, `performance`, `maintainability` | all four |
+
+### Other Templates
+
+Use `pk show <template>` to see all parameters for any template:
+
+```bash
+pk show test_plan      # Test planning parameters
+pk show refactor_plan  # Refactoring parameters  
+pk show perf_cost      # Performance analysis parameters
+pk show ci_cd          # CI/CD analysis parameters
+```
+
+## Available Presets
+
+Each template includes presets for common scenarios:
+
+| Template | Presets | Description |
+|----------|---------|-------------|
+| `audit` | `default`, `fast`, `deep` | Varies time budget and severity threshold |
+| `security` | `default`, `fast`, `deep` | Varies depth and compliance frameworks |
+| `readme` | `default`, `fast`, `deep` | Varies sections and example count |
+| Others | `default` | Standard configuration |
+
+View presets with:
+```bash
+pk presets audit
 ```
 
 ## Adding a New Template
@@ -234,24 +387,6 @@ custom_param: "default_value"
 ```bash
 pk doctor --template my_template
 ```
-
-## Base Parameters
-
-These parameters are available across most templates:
-
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `repo_path` | string | "." | Path to repository root |
-| `scope` | array[string] | ["."] | Directories/globs to include |
-| `time_budget_minutes` | integer | 60 | Time budget for the task |
-| `depth` | enum | "normal" | fast/normal/deep |
-| `output_format` | enum | "markdown" | markdown/json |
-| `risk_tolerance` | enum | "balanced" | conservative/balanced/aggressive |
-| `audience` | enum | "senior_eng" | senior_eng/junior_eng/non_tech |
-| `definition_of_done` | array[string] | [] | Completion criteria |
-| `constraints` | array[string] | [] | Constraints to observe |
-| `assumptions` | array[string] | [] | Assumptions about the task |
-| `notes` | string | "" | Additional context |
 
 ## Development
 
